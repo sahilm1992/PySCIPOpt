@@ -4605,3 +4605,15 @@ def is_memory_freed():
 
 def print_memory_in_use():
     BMScheckEmptyMemory()
+
+    
+def executeBranchRule(self, str name, allowaddcons):
+        cdef SCIP_BRANCHRULE*  branchrule
+        cdef SCIP_RESULT result
+        branchrule = SCIPfindBranchrule(self._scip, name.encode("UTF-8"))
+        if branchrule == NULL:
+            print("Error, branching rule not found!")
+            return PY_SCIP_RESULT.DIDNOTFIND
+        else:
+            branchrule.branchexeclp(self._scip, branchrule, allowaddcons, &result)
+            return result
